@@ -1013,6 +1013,10 @@ export interface paths {
     /** Creates a publication */
     post: operations['ReplicationSourcesController_createPublication']
   }
+  '/platform/replication/{ref}/sources/{source_id}/publications/{publication_name}': {
+    /** Deletes a publication */
+    delete: operations['ReplicationSourcesController_deletePublication']
+  }
   '/platform/replication/{ref}/sources/{source_id}/tables': {
     /** Gets source tables */
     get: operations['ReplicationSourcesController_getTables']
@@ -2990,7 +2994,6 @@ export interface components {
       publish_update?: boolean
       tables?: string[] | null
     }
-    CreatePublicationResponse: Record<string, never>
     CreateReplicationPublicationBody: {
       /** @description Publication name */
       name: string
@@ -13403,11 +13406,31 @@ export interface operations {
     }
     responses: {
       201: {
-        content: {
-          'application/json': components['schemas']['CreatePublicationResponse']
-        }
+        content: never
       }
       /** @description Failed to create publication */
+      500: {
+        content: never
+      }
+    }
+  }
+  /** Deletes a publication */
+  ReplicationSourcesController_deletePublication: {
+    parameters: {
+      path: {
+        /** @description Project ref */
+        ref: string
+        /** @description Source id */
+        source_id: number
+        /** @description Publication name */
+        publication_name: string
+      }
+    }
+    responses: {
+      200: {
+        content: never
+      }
+      /** @description Failed to delete publication */
       500: {
         content: never
       }
